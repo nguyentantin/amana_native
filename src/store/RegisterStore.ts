@@ -1,4 +1,4 @@
-import { action, observable, set, toJS } from 'mobx'
+import { action, get, observable, set, toJS } from 'mobx'
 import Validator from 'validatorjs'
 
 class RegisterStore {
@@ -33,9 +33,10 @@ class RegisterStore {
   }
 
   @action
-  onFieldChange = (field: any, value: string) => {
+  onFieldChange = (field: string, value: string) => {
     console.log(field, value)
-    set(this.form, field, { value })
+    const oldValue = toJS(get(this.form, field))
+    set(this.form, field, { ...oldValue, value })
     // let { email, password } = this.form
     // const validation = new Validator(
     //   { email: email.value, password: password.value },
@@ -43,6 +44,7 @@ class RegisterStore {
     // )
     // set(this.meta, 'isValid', validation.passes())
     // set(field, 'error', validation.errors.first(field))
+    console.log(toJS(this.form))
   }
 
   @action
@@ -64,5 +66,7 @@ class RegisterStore {
   //   return data
   // }
 }
+
+export { RegisterStore }
 
 export default new RegisterStore()

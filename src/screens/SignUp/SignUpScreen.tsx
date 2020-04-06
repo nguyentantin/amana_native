@@ -9,13 +9,16 @@ import { KeyboardAvoidingView } from '../../components/KeyboardAvoidingView'
 import RegisterForm from './RegisterForm';
 
 import { Image } from '../../constants/Image'
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
+import { RegisterStore } from '../../store/RegisterStore'
+import { toJS } from 'mobx'
 
 interface SignUpProps {
-  registerStore: any,
+  registerStore: RegisterStore,
 }
 
 @inject('registerStore')
+@observer
 class SignUpScreen extends React.PureComponent<SignUpProps> {
   onSignInButtonPress = (): void => {
     // navigation && navigation.goBack()
@@ -48,7 +51,7 @@ class SignUpScreen extends React.PureComponent<SignUpProps> {
           </View>
 
           <RegisterForm
-            form={registerStore.form}
+            form={toJS(registerStore.form)}
             onChange={registerStore.onFieldChange}
             onSubmit={registerStore.onSubmitRegister}
           />

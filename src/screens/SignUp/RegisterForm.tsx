@@ -3,17 +3,15 @@ import { View } from 'react-native'
 import { Button, Input } from '@ui-kitten/components'
 
 import styles from './styles'
+import { observer } from 'mobx-react'
 
 interface RegisterProps {
-  form: {
-    name: {
-      value: ''
-    }
-  },
+  form: any,
   onSubmit: any,
   onChange: any,
 }
 
+@observer
 class RegisterForm extends React.PureComponent<RegisterProps> {
 
   onSubmitPress = (): void => {
@@ -22,6 +20,7 @@ class RegisterForm extends React.PureComponent<RegisterProps> {
 
   render(): React.ReactElement {
     const { form, onSubmit, onChange } = this.props
+    console.log(form)
     return (
       <View style={styles.formContainer}>
         <Input
@@ -30,7 +29,7 @@ class RegisterForm extends React.PureComponent<RegisterProps> {
           placeholder='Name'
           status='control'
           value={form.name.value}
-          onChange={onChange}
+          onChangeText={text => onChange('name', text)}
         />
         <Input
           style={styles.textField}
