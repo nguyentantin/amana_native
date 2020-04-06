@@ -10,7 +10,7 @@ import { AppNavigator } from './navigations/AppNavogator'
 const App = () => {
   return (
     <React.Fragment>
-      <Provider store={store}>
+      <Provider {...store}>
         <IconRegistry icons={EvaIconsPack}/>
         <ApplicationProvider mapping={mapping} theme={light}>
           <AppNavigator/>

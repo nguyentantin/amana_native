@@ -25,8 +25,14 @@ export default StyleSheet.create({
   passwordInput: {
     marginTop: 16,
   },
+  textField: {
+    marginTop: 16,
+  },
   signInLabel: {
     flex: 1,
+  },
+  submitBtn: {
+    marginTop: 30,
   },
   signUpButton: {
     flexDirection: 'row-reverse',
