@@ -6,10 +6,10 @@ import styles from './styles'
 import { ImageOverlay } from '../../components/ImageOverlay'
 import { ArrowForwardIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '../../components/Icon'
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidingView'
-import RegisterForm from './RegisterForm';
+import RegisterForm from './RegisterForm'
 
 import { Image } from '../../constants/Image'
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react'
 import { RegisterStore } from '../../store/RegisterStore'
 import { toJS } from 'mobx'
 
@@ -52,7 +52,8 @@ class SignUpScreen extends React.PureComponent<SignUpProps> {
 
           <RegisterForm
             form={toJS(registerStore.form)}
-            onChange={registerStore.onFieldChange}
+            meta={toJS(registerStore.meta)}
+            onFieldChange={registerStore.onFieldChange}
             onSubmit={registerStore.onSubmitRegister}
           />
 

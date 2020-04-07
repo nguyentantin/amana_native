@@ -3,15 +3,14 @@ import { View } from 'react-native'
 import { Button, Input } from '@ui-kitten/components'
 
 import styles from './styles'
-import { observer } from 'mobx-react'
 
 interface RegisterProps {
   form: any,
+  meta: any,
   onSubmit: any,
-  onChange: any,
+  onFieldChange: any,
 }
 
-@observer
 class RegisterForm extends React.PureComponent<RegisterProps> {
 
   onSubmitPress = (): void => {
@@ -19,45 +18,52 @@ class RegisterForm extends React.PureComponent<RegisterProps> {
   }
 
   render(): React.ReactElement {
-    const { form, onSubmit, onChange } = this.props
-    console.log(form)
+    const { form, meta, onSubmit, onFieldChange } = this.props
     return (
       <View style={styles.formContainer}>
         <Input
           style={styles.textField}
           label='NAME'
           placeholder='Name'
-          status='control'
+          status={form.name.error ? 'danger' : 'control'}
+          caption={form.name.error}
           value={form.name.value}
-          onChangeText={text => onChange('name', text)}
+          onChangeText={text => onFieldChange('name', text)}
         />
         <Input
           style={styles.textField}
           label='EMAIL'
           placeholder='Email'
-          status='control'
-          onChange={onChange}
+          status={form.email.error ? 'danger' : 'control'}
+          caption={form.email.error}
+          value={form.email.value}
+          onChangeText={text => onFieldChange('email', text)}
         />
         <Input
           style={styles.passwordInput}
           secureTextEntry={true}
           placeholder='Password'
           label='PASSWORD'
-          status='control'
-          onChange={onChange}
+          status={form.password.error ? 'danger' : 'control'}
+          caption={form.password.error}
+          value={form.password.value}
+          onChangeText={text => onFieldChange('password', text)}
         />
         <Input
           style={styles.passwordInput}
           secureTextEntry={true}
           placeholder='Password confirmation'
           label='PASSWORD CONFIRMATION'
-          status='control'
-          onChange={onChange}
+          status={form.passwordConfirmation.error ? 'danger' : 'control'}
+          caption={form.passwordConfirmation.error}
+          value={form.passwordConfirmation.value}
+          onChangeText={text => onFieldChange('passwordConfirmation', text)}
         />
         <Button
           style={styles.submitBtn}
           status='control'
           size='large'
+          disabled={!meta.isValid}
           onPress={onSubmit}>
           SIGN UP
         </Button>

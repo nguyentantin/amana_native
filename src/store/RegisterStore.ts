@@ -1,50 +1,77 @@
 import { action, get, observable, set, toJS } from 'mobx'
-import Validator from 'validatorjs'
+import validate from 'validate.js'
+import _ from 'lodash'
 
 class RegisterStore {
   @observable
   form = {
     name: {
-      value: '',
+      value: null,
       error: null,
-      rule: 'required'
+      rule: {
+        presence: {
+          allowEmpty: false
+        },
+        length: {
+          minimum: 6,
+          maximum: 100,
+        }
+      }
     },
     email: {
-      value: '',
+      value: null,
       error: null,
-      rule: 'required|email'
+      rule: {
+        presence: {
+          allowEmpty: false
+        },
+        email: true
+      }
     },
     password: {
-      value: '',
+      value: null,
       error: null,
-      rule: 'required'
+      rule: {
+        presence: {
+          allowEmpty: false
+        }
+      }
     },
     passwordConfirmation: {
-      value: '',
+      value: null,
       error: null,
-      rule: 'required'
+      rule: {
+        presence: {
+          allowEmpty: false
+        },
+        equality: {
+          attribute: "password",
+        }
+      }
     }
   }
 
   @observable
   meta = {
-    isValid: true,
+    isValid: false,
     error: null
   }
 
   @action
   onFieldChange = (field: string, value: string) => {
-    console.log(field, value)
     const oldValue = toJS(get(this.form, field))
     set(this.form, field, { ...oldValue, value })
-    // let { email, password } = this.form
-    // const validation = new Validator(
-    //   { email: email.value, password: password.value },
-    //   { email: email.rule, password: password.rule },
-    // )
-    // set(this.meta, 'isValid', validation.passes())
-    // set(field, 'error', validation.errors.first(field))
-    console.log(toJS(this.form))
+    const data = this.getFlattenedValues('value')
+    const rule = this.getFlattenedValues('rule')
+    const validation = validate(data, rule)
+    set(this.meta, 'isValid', validation === undefined)
+    const currentValidation = _.get(validation, field)
+    if (currentValidation !== undefined) {
+      const err = _.head(currentValidation)
+      set(this.form, field, _.merge(get(this.form, field), { error: err }))
+    } else {
+      set(this.form, field, _.merge(get(this.form, field), { error: null }))
+    }
   }
 
   @action
@@ -54,17 +81,21 @@ class RegisterStore {
 
   @action
   onSubmitRegister = () => {
-    console.log('submit')
+    console.log('submit, call api register')
+    console.log(toJS(this.form))
   }
 
-  // getFlattenedValues = (valueKey = 'value') => {
-  //   let data = {}
-  //   let form = toJS(this.form)
-  //   Object.keys(form).map(key => {
-  //     data[key] = form[key][valueKey]
-  //   });
-  //   return data
-  // }
+  getFlattenedValues = (valueKey = 'value') => {
+    let data = {}
+    let form = toJS(this.form)
+    Object.keys(form).map(key => {
+      const parent = get(this.form, key)
+      const value = get(parent, valueKey)
+      const tmp = { [key]: toJS(value) }
+      Object.assign(data, tmp)
+    });
+    return data
+  }
 }
 
 export { RegisterStore }
