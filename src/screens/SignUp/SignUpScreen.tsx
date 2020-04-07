@@ -23,7 +23,7 @@ class SignUpScreen extends React.PureComponent {
       <KeyboardAvoidingView>
         <ImageOverlay
           style={styles.container}
-          source={Image.login_background}
+          source={Image.background}
         >
           <View style={styles.signInContainer}>
             <Text

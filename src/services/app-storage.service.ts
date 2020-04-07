@@ -6,37 +6,25 @@ enum STORAGE_KEY {
 }
 
 export class AppStorageService {
-
   static async getAuthInfo() {
-    try {
-      return await AsyncStorage.getItem(STORAGE_KEY.AUTH_INFO)
-    } catch (e) {
-      throw Error('Error: Get AuthInfo')
-    }
+    return await AsyncStorage.getItem(STORAGE_KEY.AUTH_INFO)
   }
 
   static async setAuthInfo(me: object) {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY.AUTH_INFO, JSON.stringify(me))
-    } catch (e) {
-      throw Error('Error: Set AuthInfo')
-    }
+    return await AsyncStorage.setItem(STORAGE_KEY.AUTH_INFO, JSON.stringify(me))
   }
 
   static async getAuthAccessToken() {
-    try {
-      return await AsyncStorage.getItem(STORAGE_KEY.AUTH_ACCESS_TOKEN)
-    } catch (e) {
-      throw Error('Error: Get AccessToken')
-    }
+    return await AsyncStorage.getItem(STORAGE_KEY.AUTH_ACCESS_TOKEN)
   }
 
   static async setAuthAccessToken(token: string) {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY.AUTH_ACCESS_TOKEN, token)
-    } catch (e) {
-      throw Error('Error: Set Auth AccessToken')
-    }
+    return await AsyncStorage.setItem(STORAGE_KEY.AUTH_ACCESS_TOKEN, token)
+  }
+
+  static async revokeAuth() {
+    await AsyncStorage.removeItem(STORAGE_KEY.AUTH_ACCESS_TOKEN)
+    await AsyncStorage.removeItem(STORAGE_KEY.AUTH_INFO)
   }
 }
 
