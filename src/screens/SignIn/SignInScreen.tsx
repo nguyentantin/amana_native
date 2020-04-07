@@ -53,6 +53,11 @@ class SignInScreen extends React.PureComponent<SignInScreenProps> {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
+  onSignUpPress = () => {
+    const { navigation } = this.props
+    navigation.navigate('SignUp')
+  }
+
   render(): React.ReactElement {
     return (
       <KeyboardAvoidingView>
@@ -73,6 +78,7 @@ class SignInScreen extends React.PureComponent<SignInScreenProps> {
               status='control'
               size='giant'
               icon={ArrowForwardIcon}
+              onPress={this.onSignUpPress}
             >
               Sign Up
             </Button>

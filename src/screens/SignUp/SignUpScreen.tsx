@@ -15,13 +15,19 @@ import { toJS } from 'mobx'
 
 interface SignUpProps {
   registerStore: RegisterStore,
+  navigation: any,
 }
 
 @inject('registerStore')
 @observer
 class SignUpScreen extends React.PureComponent<SignUpProps> {
+  constructor(props: any) {
+    super(props)
+  }
+
   onSignInButtonPress = (): void => {
-    // navigation && navigation.goBack()
+    const { navigation } = this.props
+    navigation.navigate('SignIn')
   }
 
   render(): React.ReactElement {
