@@ -1,24 +1,37 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Button, Input, Text } from '@ui-kitten/components'
+import { Button, Text } from '@ui-kitten/components'
 
 import styles from './styles'
 import { ImageOverlay } from '../../components/ImageOverlay'
 import { ArrowForwardIcon, FacebookIcon, GoogleIcon, TwitterIcon } from '../../components/Icon'
 import { KeyboardAvoidingView } from '../../components/KeyboardAvoidingView'
+import RegisterForm from './RegisterForm'
 
 import { Image } from '../../constants/Image'
+import { inject, observer } from 'mobx-react'
+import { RegisterStore } from '../../store/RegisterStore'
+import { toJS } from 'mobx'
 
-class SignUpScreen extends React.PureComponent {
-   onSignInButtonPress = (): void => {
-    // navigation && navigation.goBack()
+interface SignUpProps {
+  registerStore: RegisterStore,
+  navigation: any,
+}
+
+@inject('registerStore')
+@observer
+class SignUpScreen extends React.PureComponent<SignUpProps> {
+  constructor(props: any) {
+    super(props)
   }
 
-   onSignUpButtonPress = (): void => {
-    // navigation && navigation.navigate('SignIn')
+  onSignInButtonPress = (): void => {
+    const { navigation } = this.props
+    navigation.navigate('SignIn')
   }
 
   render(): React.ReactElement {
+    const { registerStore } = this.props
     return (
       <KeyboardAvoidingView>
         <ImageOverlay
@@ -30,7 +43,7 @@ class SignUpScreen extends React.PureComponent {
               style={styles.signInLabel}
               status='control'
               category='h4'>
-              SIGN IN
+              SIGN UP
             </Text>
             <Button
               style={styles.signUpButton}
@@ -38,31 +51,18 @@ class SignUpScreen extends React.PureComponent {
               status='control'
               size='giant'
               icon={ArrowForwardIcon}
-              onPress={this.onSignUpButtonPress}>
-              Sign Up
+              onPress={this.onSignInButtonPress}>
+              Sign In
             </Button>
           </View>
 
-          <View style={styles.formContainer}>
-            <Input
-              label='EMAIL'
-              placeholder='Email'
-              status='control'
-            />
-            <Input
-              style={styles.passwordInput}
-              secureTextEntry={true}
-              placeholder='Password'
-              label='PASSWORD'
-              status='control'
-            />
-          </View>
-          <Button
-            status='control'
-            size='large'
-            onPress={this.onSignInButtonPress}>
-            SIGN IN
-          </Button>
+          <RegisterForm
+            form={toJS(registerStore.form)}
+            meta={toJS(registerStore.meta)}
+            onFieldChange={registerStore.onFieldChange}
+            onSubmit={registerStore.onSubmitRegister}
+          />
+
           <View style={styles.socialAuthContainer}>
             <Text
               style={styles.socialAuthHintText}
