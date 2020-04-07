@@ -5,15 +5,15 @@ import { mapping, light } from '@eva-design/eva'
 import { Provider } from 'mobx-react'
 
 import store from './store'
-import { AppNavigator } from './navigations/AppNavogator'
+import AppContainer from './app/AppContainer'
 
-const App = () => {
+const App = (props: any) => {
   return (
     <React.Fragment>
       <Provider {...store}>
         <IconRegistry icons={EvaIconsPack}/>
         <ApplicationProvider mapping={mapping} theme={light}>
-          <AppNavigator/>
+          <AppContainer {...props}/>
         </ApplicationProvider>
       </Provider>
     </React.Fragment>
