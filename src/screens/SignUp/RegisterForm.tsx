@@ -12,11 +12,6 @@ interface RegisterProps {
 }
 
 class RegisterForm extends React.PureComponent<RegisterProps> {
-
-  onSubmitPress = (): void => {
-    // navigation && navigation.navigate('SignIn')
-  }
-
   render(): React.ReactElement {
     const { form, meta, onSubmit, onFieldChange } = this.props
     return (
@@ -24,7 +19,7 @@ class RegisterForm extends React.PureComponent<RegisterProps> {
         <Input
           style={styles.textField}
           label='NAME'
-          placeholder='Name'
+          placeholder='Enter your name...'
           status={form.name.error ? 'danger' : 'control'}
           caption={form.name.error}
           value={form.name.value}
@@ -33,7 +28,8 @@ class RegisterForm extends React.PureComponent<RegisterProps> {
         <Input
           style={styles.textField}
           label='EMAIL'
-          placeholder='Email'
+          keyboardType={'email-address'}
+          placeholder='Enter your email...'
           status={form.email.error ? 'danger' : 'control'}
           caption={form.email.error}
           value={form.email.value}
@@ -42,7 +38,7 @@ class RegisterForm extends React.PureComponent<RegisterProps> {
         <Input
           style={styles.passwordInput}
           secureTextEntry={true}
-          placeholder='Password'
+          placeholder='Enter your password...'
           label='PASSWORD'
           status={form.password.error ? 'danger' : 'control'}
           caption={form.password.error}
@@ -52,7 +48,7 @@ class RegisterForm extends React.PureComponent<RegisterProps> {
         <Input
           style={styles.passwordInput}
           secureTextEntry={true}
-          placeholder='Password confirmation'
+          placeholder='Enter your password confirmation...'
           label='PASSWORD CONFIRMATION'
           status={form.passwordConfirmation.error ? 'danger' : 'control'}
           caption={form.passwordConfirmation.error}
