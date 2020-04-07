@@ -1,6 +1,6 @@
 export interface RegisterInterface {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirmation: string;
+  name: string
+  email: string
+  password: string
+  passwordConfirmation: string
 }
