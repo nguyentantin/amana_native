@@ -33,7 +33,7 @@ abstract class GenericFormStore {
   }
 
   @action
-  onFieldChange = (field: string, value: string) => {
+  onFieldChange = (field: string, value: string): void => {
     const oldValue = toJS(get(this.form, field))
     set(this.form, field, { ...oldValue, value })
     const data = this.getFlattenedValues('value')
@@ -50,14 +50,23 @@ abstract class GenericFormStore {
   }
 
   @action
-  setError = (errMsg: string) => {
+  setError = (isValid: boolean, errMsg: string): void => {
+    set(this.meta, 'isValid', isValid)
     set(this.meta, 'error', errMsg)
   }
 
   @action
-  getModelValues = () => {
+  getModelValues = (): object => {
     return _.mapValues(this.form, (item) => {
       return _.get(item, 'value')
+    })
+  }
+
+  @action
+  parseErrorFromServer = (error: object): void => {
+    _.forEach(error, (item, key) => {
+      const errMsg = _.head(item)
+      set(this.form, key, _.merge(get(this.form, key), { error: errMsg }))
     })
   }
 }

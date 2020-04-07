@@ -1,5 +1,9 @@
-import { action } from 'mobx'
+import { action, toJS } from 'mobx'
 import GenericFormStore from './GenericFormStore'
+import AuthRequest from '../api/Request/AuthRequest'
+import { RegisterInterface } from '../api/interface/register.interface'
+import { Alert } from 'react-native'
+import _ from 'lodash'
 
 class RegisterStore extends GenericFormStore {
   initialFormModel() {
@@ -54,7 +58,26 @@ class RegisterStore extends GenericFormStore {
   @action
   onSubmitRegister = () => {
     console.log('submit, call api register')
-    console.log(this.getModelValues())
+    const params = <RegisterInterface>this.getModelValues()
+    AuthRequest.register(params)
+      .then((data: any) => {
+        console.log(data) // temp log, just pass warning data
+        Alert.alert('Success', 'Register success')
+        this.initialFormModel()
+        // @TODO push navigation to login screen - waiting for Tin Lon
+      })
+      .catch((err: any) => {
+        console.log(err)
+        const statusCode = _.get(err, 'statusCode')
+        let msg = 'Server Internal Error'
+        if (statusCode === 422) {
+          const errorResponse = _.get(err, 'error')
+          this.parseErrorFromServer(errorResponse)
+          msg = 'Validation error, please check again'
+        }
+        this.setError(false, msg)
+        Alert.alert('Error', msg)
+      })
   }
 }
 
