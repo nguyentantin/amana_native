@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { isEmpty } from 'lodash'
 import { AppStorageService } from '../services/app-storage.service'
+import AppStore from '../store/AppStore'
 
 axios.interceptors.request.use(
   async (config) => {
+    AppStore.setLoadingScreen(true)
     const accessToken = await AppStorageService.getAuthAccessToken()
 
     if (!isEmpty(accessToken)) {
@@ -16,11 +18,15 @@ axios.interceptors.request.use(
 
     return config
   },
-  error => Promise.reject(error),
+  error => {
+    AppStore.setLoadingScreen(false)
+    return Promise.reject(error)
+  },
 )
 
 axios.interceptors.response.use(
   (response) => {
+    AppStore.setLoadingScreen(false)
     return response.data
   },
   (error) => {
@@ -36,5 +42,6 @@ axios.interceptors.response.use(
         break
     }
 
+    AppStore.setLoadingScreen(false)
     return Promise.reject(error.response && error.response.data)
   })

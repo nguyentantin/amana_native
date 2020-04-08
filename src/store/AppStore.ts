@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 import { AppStorageService } from '../services/app-storage.service'
 
-class AppStore {
+export class AppStore {
   @observable loading = false
 
   @observable isAuthenticated = false
