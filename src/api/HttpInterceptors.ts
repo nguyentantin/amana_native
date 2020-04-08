@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { isEmpty } from 'lodash'
+import { AppStorageService } from '../services/app-storage.service'
 
 axios.interceptors.request.use(
-  (config) => {
-    const accessToken = ''
+  async (config) => {
+    const accessToken = await AppStorageService.getAuthAccessToken()
 
     if (!isEmpty(accessToken)) {
       const headers = {
@@ -15,7 +16,7 @@ axios.interceptors.request.use(
 
     return config
   },
-  error => Promise.reject(error)
+  error => Promise.reject(error),
 )
 
 axios.interceptors.response.use(

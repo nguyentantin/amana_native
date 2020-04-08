@@ -18,3 +18,18 @@ export const TwitterIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='twitter'/>
 )
 
+export const ColorPaletteIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='color-palette-outline'/>
+)
+
+export const LayoutIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='layout-outline'/>
+)
+
+export const StarOutlineIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='star-outline'/>
+)
+
+export const SettingsIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='settings'/>
+)

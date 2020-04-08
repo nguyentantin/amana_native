@@ -1,6 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Button, Text } from '@ui-kitten/components'
+import { toJS } from 'mobx'
+import { inject, observer } from 'mobx-react'
 
 import styles from './styles'
 import { ImageOverlay } from '../../components/ImageOverlay'
@@ -9,9 +11,8 @@ import { KeyboardAvoidingView } from '../../components/KeyboardAvoidingView'
 import RegisterForm from './RegisterForm'
 
 import { Image } from '../../constants/Image'
-import { inject, observer } from 'mobx-react'
 import { RegisterStore } from '../../store/RegisterStore'
-import { toJS } from 'mobx'
+import { navigate } from '../../navigations'
 
 interface SignUpProps {
   registerStore: RegisterStore,
@@ -26,8 +27,8 @@ class SignUpScreen extends React.PureComponent<SignUpProps> {
   }
 
   onSignInButtonPress = (): void => {
-    const { navigation } = this.props
-    navigation.navigate('SignIn')
+    // const { navigation } = this.props
+    navigate('SignIn')
   }
 
   render(): React.ReactElement {
