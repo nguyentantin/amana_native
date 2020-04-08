@@ -1,6 +1,8 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { Button, Input, Text } from '@ui-kitten/components'
+import validate from 'validate.js'
+import _ from 'lodash'
 
 import styles from './styles'
 import { ImageOverlay } from '../../components/ImageOverlay'
@@ -9,7 +11,7 @@ import { KeyboardAvoidingView } from '../../components/KeyboardAvoidingView'
 
 import { Image } from '../../constants/Image'
 import { inject, observer } from 'mobx-react'
-import { action, observable, set, toJS } from 'mobx'
+import { action, get, observable, set, toJS } from 'mobx'
 import AuthRequest from '../../api/Request/AuthRequest'
 import { AppStorageService } from '../../services/app-storage.service'
 
@@ -23,17 +25,43 @@ interface SignInScreenProps {
 class SignInScreen extends React.PureComponent<SignInScreenProps> {
   @observable isSubmit = false
 
+  @observable isValid = false
+
   @observable input = {
     email: '',
-    password: '',
+    password: ''
+  }
+
+  @observable error = {
+    email: '',
+    password: ''
+  }
+
+  private validateRules = {
+    email: {
+      presence: {
+        allowEmpty: false
+      },
+      email: true
+    },
+    password: {
+      presence: {
+        allowEmpty: false
+      }
+    }
   }
 
   @action onChangeText(field: string, value: string) {
     set(this.input, field, value)
+    const validation = validate(this.input, this.validateRules)
+    set(this, 'isValid', validation === undefined)
+    const fieldValidate = _.get(validation, field)
+    const fieldMsg = (fieldValidate !== undefined) ? _.head(fieldValidate) : null
+    set(this.error, field, fieldMsg)
   }
 
   @action onSubmit() {
-    const {appStore} = this.props
+    const { appStore } = this.props
 
     AuthRequest
       .login(toJS(this.input))
@@ -42,7 +70,24 @@ class SignInScreen extends React.PureComponent<SignInScreenProps> {
         await AppStorageService.setAuthInfo(response.user)
         // navigation.navigate('Home')
         appStore.setIsAuthenticated(true)
-        appStore.setAuthInfo(response.user)
+        await appStore.setAuthInfo(response.user)
+      })
+      .catch((err: any) => {
+        const statusCode = _.get(err, 'statusCode')
+        let msg = 'Server Internal Error'
+        if (statusCode === 422) {
+          const errorResponse = _.get(err, 'error')
+          _.forEach(errorResponse, (item, key) => {
+            const errMsg = _.head(item)
+            set(this.error, key, errMsg)
+          })
+          msg = 'Validation error, please check again'
+        }
+        if (statusCode === 400) {
+          msg = _.get(err, 'error.message')
+        }
+
+        Alert.alert('Error', msg)
       })
   }
 
@@ -88,7 +133,8 @@ class SignInScreen extends React.PureComponent<SignInScreenProps> {
             <Input
               label='EMAIL'
               placeholder='Email'
-              status='control'
+              status={this.error.email ? 'danger' : 'control'}
+              caption={this.error.email}
               value={this.input.email}
               onChangeText={(text) => this.onChangeText('email', text)}
             />
@@ -97,7 +143,8 @@ class SignInScreen extends React.PureComponent<SignInScreenProps> {
               secureTextEntry={true}
               placeholder='Password'
               label='PASSWORD'
-              status='control'
+              status={this.error.password ? 'danger' : 'control'}
+              caption={this.error.password}
               value={this.input.password}
               onChangeText={(text) => this.onChangeText('password', text)}
             />
@@ -105,6 +152,7 @@ class SignInScreen extends React.PureComponent<SignInScreenProps> {
           <Button
             status='control'
             size='large'
+            disabled={!this.isValid}
             onPress={this.onSubmit}
           >
             SIGN IN

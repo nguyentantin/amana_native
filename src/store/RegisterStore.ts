@@ -4,6 +4,7 @@ import AuthRequest from '../api/Request/AuthRequest'
 import { RegisterInterface } from '../api/interface/register.interface'
 import { Alert } from 'react-native'
 import _ from 'lodash'
+import { navigate } from '../navigations'
 
 class RegisterStore extends GenericFormStore {
   initialFormModel() {
@@ -64,7 +65,7 @@ class RegisterStore extends GenericFormStore {
         console.log(data) // temp log, just pass warning data
         Alert.alert('Success', 'Register success')
         this.initialFormModel()
-        // @TODO push navigation to login screen - waiting for Tin Lon
+        navigate('SignIn')
       })
       .catch((err: any) => {
         console.log(err)
