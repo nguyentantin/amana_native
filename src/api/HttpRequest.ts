@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Config } from '../constants/Config'
 import './HttpInterceptors'
 
 export default class HttpRequest {
@@ -13,7 +14,7 @@ export default class HttpRequest {
       'Accept': 'application/json',
       'X-Requested-With': 'XMLHttpRequest'
     }
-    this.apiURL = 'https://api.amana.fun'
+    this.apiURL = Config.apiUrl
     this.axios = axios
     this.CancelToken = this.axios.CancelToken
   }
