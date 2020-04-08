@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native'
-import { BottomNavigationTab, Divider } from '@ui-kitten/components'
-import { BrandBottomNavigation } from './BrandBottomNavigation'
+import { BottomNavigationTab, Divider, BottomNavigation } from '@ui-kitten/components'
+
 import { LayoutIcon, StarOutlineIcon, SettingsIcon } from './Icon'
 
 export const HomeBottomNavigation = (props: any): React.ReactElement => {
@@ -13,7 +13,7 @@ export const HomeBottomNavigation = (props: any): React.ReactElement => {
   return (
     <SafeAreaView>
       <Divider/>
-      <BrandBottomNavigation
+      <BottomNavigation
         appearance='noIndicator'
         selectedIndex={props.state.index}
         onSelect={onSelect}>
@@ -29,7 +29,7 @@ export const HomeBottomNavigation = (props: any): React.ReactElement => {
           title='Profile'
           icon={SettingsIcon}
         />
-      </BrandBottomNavigation>
+      </BottomNavigation>
     </SafeAreaView>
   )
 }

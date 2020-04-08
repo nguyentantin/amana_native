@@ -19,10 +19,10 @@ const initialTabRoute: string = 'Home'
 /*
  * Can we access it from `HomeNavigator`?
  */
-const ROOT_ROUTES: string[] = ['Home']
+const ROOT_ROUTES: string[] = ['Home', 'Project', 'Profile']
 
 const isOneOfRootRoutes = (currentRoute: RouteProp<any, any>): boolean => {
-  return ROOT_ROUTES.find(route => currentRoute.name === route) !== undefined;
+  return ROOT_ROUTES.find(route => currentRoute.name === route) !== undefined
 }
 
 const TabBarVisibleOnRootScreenOptions = ({route}: any): BottomTabNavigationOptions => {
@@ -38,6 +38,8 @@ const HomeTabsNavigator = (): React.ReactElement => (
     initialRouteName={initialTabRoute}
     tabBar={props => <HomeBottomNavigation {...props} />}>
     <BottomTab.Screen name='Home' component={HomeScreen}/>
+    <BottomTab.Screen name='Project' component={HomeScreen}/>
+    <BottomTab.Screen name='Profile' component={HomeScreen}/>
   </BottomTab.Navigator>
 )
 
