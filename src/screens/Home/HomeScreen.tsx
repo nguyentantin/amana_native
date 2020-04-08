@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { Text, Button, Layout } from '@ui-kitten/components'
 import { inject, observer } from 'mobx-react'
 
+import styles from './styles'
 import { AppStorageService } from '../../services/app-storage.service'
 
 interface HomeScreenProps {
@@ -44,12 +45,6 @@ class HomeScreen extends React.PureComponent<HomeScreenProps> {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-})
 
 export default HomeScreen
 
