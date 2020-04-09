@@ -34,6 +34,10 @@ export const SettingsIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='settings'/>
 )
 
+export const ProjectIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='layers-outline'/>
+)
+
 export const BookIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='book'/>
 )
