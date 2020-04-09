@@ -12,7 +12,7 @@ interface HomeScreenProps {
 
 @inject('appStore')
 @observer
-class HomeScreen extends React.PureComponent<HomeScreenProps> {
+class DashboardScreen extends React.PureComponent<HomeScreenProps> {
   constructor(prop: any) {
     super(prop)
 
@@ -46,5 +46,5 @@ class HomeScreen extends React.PureComponent<HomeScreenProps> {
   }
 }
 
-export default HomeScreen
+export default DashboardScreen
 

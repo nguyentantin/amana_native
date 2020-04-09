@@ -68,7 +68,7 @@ class SignInScreen extends React.PureComponent<SignInScreenProps> {
       .then(async (response: any) => {
         await AppStorageService.setAuthAccessToken(response.accessToken)
         await AppStorageService.setAuthInfo(response.user)
-        // navigation.navigate('Home')
+        // navigation.navigate('Dashboard')
         appStore.setIsAuthenticated(true)
         await appStore.setAuthInfo(response.user)
       })
