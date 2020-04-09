@@ -33,3 +33,11 @@ export const StarOutlineIcon = (style: ImageStyle): IconElement => (
 export const SettingsIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='settings'/>
 )
+
+export const BookIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='book'/>
+)
+
+export const GithubIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='github'/>
+)
