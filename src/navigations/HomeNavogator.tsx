@@ -5,21 +5,23 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import HomeScreen from '../screens/Home/HomeScreen'
 import { HomeBottomNavigation } from '../components/HomeBottomNavigation'
+// import { HomeDrawer } from '../components/HomeDrawer'
+import { DashboardNavigator } from './DashboardNavigator'
+import { ProjectNavigator } from './ProjectNavigator'
+import { ProfileNavigator } from './ProfileNavigator'
 
 const BottomTab = createBottomTabNavigator()
+const Drawer = createDrawerNavigator()
 
 /*
  * open Components tab as default.
  */
 const initialTabRoute: string = 'Home'
 
-/*
- * Can we access it from `HomeNavigator`?
- */
-const ROOT_ROUTES: string[] = ['Home', 'Project', 'Profile']
+const ROOT_ROUTES: string[] = ['Dashboard', 'Project', 'Profile']
 
 const isOneOfRootRoutes = (currentRoute: RouteProp<any, any>): boolean => {
   return ROOT_ROUTES.find(route => currentRoute.name === route) !== undefined
@@ -37,11 +39,26 @@ const HomeTabsNavigator = (): React.ReactElement => (
     screenOptions={TabBarVisibleOnRootScreenOptions}
     initialRouteName={initialTabRoute}
     tabBar={props => <HomeBottomNavigation {...props} />}>
-    <BottomTab.Screen name='Home' component={HomeScreen}/>
-    <BottomTab.Screen name='Project' component={HomeScreen}/>
-    <BottomTab.Screen name='Profile' component={HomeScreen}/>
+    <BottomTab.Screen name='Dashboard' component={DashboardNavigator}/>
+    <BottomTab.Screen name='Project' component={ProjectNavigator}/>
+    <BottomTab.Screen name='Profile' component={ProfileNavigator}/>
   </BottomTab.Navigator>
 )
+
+// const Layout = (): React.ReactElement => (
+//   <Stack.Navigator headerMode='none'>
+//     <Stack.Screen name='HomeTabsNavigator' component={HomeTabsNavigator}/>
+//   </Stack.Navigator>
+// )
+//
+// const DrawerNavigator = (): React.ReactElement => (
+//   <Drawer.Navigator
+//     screenOptions={{gestureEnabled: false}}
+//     drawerContent={props => <HomeDrawer {...props}/>}
+//   >
+//     <Drawer.Screen name='Dashboard' component={Layout}/>
+//   </Drawer.Navigator>
+// )
 
 export const HomeNavigator = (): React.ReactElement => (
   <Stack.Navigator headerMode='none'>

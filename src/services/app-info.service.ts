@@ -1,4 +1,4 @@
-import {Platform} from 'react-native'
+import { Platform } from 'react-native'
 import Constants from 'expo-constants'
 
 export class AppInfoService {
