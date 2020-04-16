@@ -6,7 +6,7 @@ import ProjectListScreen from '../screens/ProjectList/ProjectListScreen'
 const Stack = createStackNavigator()
 
 export const ProjectNavigator = (): React.ReactElement => (
-  <Stack.Navigator headerMode='none'>
-    <Stack.Screen name='ProjectList' component={ProjectListScreen}/>
+  <Stack.Navigator>
+    <Stack.Screen name='ProjectList' options={{ title: 'Projects' }} component={ProjectListScreen}/>
   </Stack.Navigator>
 )
