@@ -5,7 +5,7 @@ import DashboardScreen from '../screens/Dashboard/DashboardScreen'
 const Stack = createStackNavigator()
 
 export const DashboardNavigator = (): React.ReactElement => (
-  <Stack.Navigator headerMode='none'>
-    <Stack.Screen name='Dashboard' component={DashboardScreen}/>
+  <Stack.Navigator>
+    <Stack.Screen name='Dashboard' component={DashboardScreen} options={{ title: 'Dashboard' }}/>
   </Stack.Navigator>
 )

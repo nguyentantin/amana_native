@@ -1,12 +1,29 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Text, Layout } from '@ui-kitten/components'
+import { Text, Layout, Button } from '@ui-kitten/components'
+import { inject, observer } from 'mobx-react'
 
 import styles from './styles'
+import { AppStorageService } from '../../services/app-storage.service'
 
-class ProfileScreen extends React.PureComponent {
+interface ProfileScreenProps {
+  appStore: any
+}
+
+@inject('appStore')
+@observer
+class ProfileScreen extends React.PureComponent<ProfileScreenProps> {
   constructor(prop: any) {
     super(prop)
+
+    this.logout = this.logout.bind(this)
+  }
+
+  async logout() {
+    const {appStore} = this.props
+    await AppStorageService.revokeAuth()
+    appStore.setIsAuthenticated(false)
+    appStore.setAuthInfo({})
   }
 
   render(): React.ReactElement {
@@ -16,6 +33,8 @@ class ProfileScreen extends React.PureComponent {
           <Text>
             Profile Screen 🎉
           </Text>
+
+          <Button onPress={this.logout}>Logout</Button>
         </View>
       </Layout>
     )

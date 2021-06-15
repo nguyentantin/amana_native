@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { BottomNavigationTab, Divider, BottomNavigation } from '@ui-kitten/components'
 
 import { LayoutIcon, ProjectIcon, SettingsIcon } from './Icon'
@@ -11,12 +11,14 @@ export const HomeBottomNavigation = (props: any): React.ReactElement => {
   }
 
   return (
-    <SafeAreaView>
+    <>
       <Divider/>
       <BottomNavigation
         appearance='noIndicator'
         selectedIndex={props.state.index}
-        onSelect={onSelect}>
+        onSelect={onSelect}
+        style={styles.container}
+      >
         <BottomNavigationTab
           title='Dashboard'
           icon={LayoutIcon}
@@ -30,6 +32,12 @@ export const HomeBottomNavigation = (props: any): React.ReactElement => {
           icon={SettingsIcon}
         />
       </BottomNavigation>
-    </SafeAreaView>
+    </>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingBottom: 30,
+  },
+})

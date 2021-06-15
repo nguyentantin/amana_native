@@ -18,8 +18,7 @@ export default StyleSheet.create({
   layout: {
     flex: 1,
     alignContent: 'center',
-    paddingTop: 50,
-    padding: 20,
+    padding: 10,
   },
 
   scrollProject: {

@@ -14,7 +14,6 @@ import { ProjectNavigator } from './ProjectNavigator'
 import { ProfileNavigator } from './ProfileNavigator'
 
 const BottomTab = createBottomTabNavigator()
-const Drawer = createDrawerNavigator()
 
 /*
  * open Components tab as default.
@@ -38,7 +37,8 @@ const HomeTabsNavigator = (): React.ReactElement => (
   <BottomTab.Navigator
     screenOptions={TabBarVisibleOnRootScreenOptions}
     initialRouteName={initialTabRoute}
-    tabBar={props => <HomeBottomNavigation {...props} />}>
+    tabBar={props => <HomeBottomNavigation {...props} />}
+  >
     <BottomTab.Screen name='Dashboard' component={DashboardNavigator}/>
     <BottomTab.Screen name='Project' component={ProjectNavigator}/>
     <BottomTab.Screen name='Profile' component={ProfileNavigator}/>
